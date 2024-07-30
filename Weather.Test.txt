@@ -1,0 +1,89 @@
+<?php
+
+namespace App\Controller;
+
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Routing\Attribute\Route;
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
+
+#[Route('/weather2')]
+class Weather2Controller extends AbstractController
+{
+    #[Route('/highlander-says/{threshold<\d+>?50}', host: 'api.localhost')]
+    // #[Route('/weather/highlander-says/{threshold}', priority:2,requirements:['threshold' => '\d+'] ,name: 'this is my name', methods: ['GET','POST'])]
+    public function highlanderSaysApi(int $threshold) : Response
+    {
+        $draw = random_int(0,100);
+        $forecast=$draw<$threshold? "rainy" : "sunny";
+        $json = [
+            'forecast' => $forecast,
+            'self' => $this->generateUrl(
+                'app_weather_highlandersaysapi', 
+                ['threshold' => $threshold],
+                UrlGeneratorInterface::ABSOLUTE_URL
+            ),
+        ];
+        return new JsonResponse($json);
+    } 
+
+    #[Route('/highlander-says/{threshold<\d+>?50}')]
+    // #[Route('/weather/highlander-says/{threshold}', priority:2,requirements:['threshold' => '\d+'] ,name: 'this is my name', methods: ['GET','POST'])]
+    public function highlanderSays(int $threshold) : Response
+    {
+        $draw = random_int(0,100);
+        $forecast=$draw<$threshold? "rainy" : "sunny";
+        return $this->render('weather/highlander_says.html.twig', [
+            'forecast' => $forecast,
+        ]);
+    } 
+
+    #[Route('/highlander-says/{guess}')]
+    public function highlanderSaysGuess(string $guess): Response
+    {
+        $availableGuesses = ['snow' , 'rain' , 'hail'];
+
+        if (!in_array($guess,$availableGuesses)) {
+            throw $this->createNotFoundException('This guess is not found!');
+        }
+        $forecast = "it is going to be $guess !!";
+
+        return $this->render('weather/highlander_says.html.twig', [
+            'forecast' => $forecast,
+        ]);
+    } 
+
+
+    // #[Route('/weather/{country}/{city}')]
+    // public function forecast(string $country, string $city) : Response
+    // {
+        
+    //     return $this->render('weather/index.html.twig', [
+    //         'country' => $country,
+    //         'city' => $city,
+    //     ]);
+    // } 
+    
+    // #[Route('/highlander-says/{threshold<\d+>?50}')]
+    // public function highlanderSaysApi(int $threshold, Request $request): Response
+    // {
+    //     $trials = $request->get('trials',1);
+
+    //     $forecasts=[];
+
+    //     for ($i=0; $i < $trials; $i++) { 
+
+    //         $draw = random_int(0,100);
+    //         $forecast = ($draw < $threshold) ? "rainy!!" : "sunny!!";
+    //         $forecasts[]=$forecast;
+    //     }
+
+    //     return $this->render('weather/index.html.twig', [
+    //         'forecasts' => $forecasts,
+    //     ]);
+    // }
+
+
+}

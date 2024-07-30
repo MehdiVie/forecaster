@@ -1,0 +1,16 @@
+{% extends 'layout_boxed.html.twig' %}
+
+{% block content %}
+    {% set name = app.request.get('name') %}
+
+    {% if name %}
+        <div>Hello <strong>{{name}}</strong></div>
+    {% else %}
+        <div>Please Enter Your Name:</div>
+    {% endif %}
+
+    <form>
+        <input type="text" name="name" value="{{ name }}" />
+    </form>
+{% endblock %}
+{# <script>alert("Hello")</script> #}

@@ -1,0 +1,36 @@
+(in public folder) php -S localhost:8000
+
+php .\bin\console debug:router
+
+php .\bin\console make:controller
+
+php .\composer.phar require --dev symfony/maker-bundle
+
+download composer.phar to local proj and then use it
+
+php .\composer.phar require symfony/http-foundation
+
+php .\bin\console Cache:clear --env=prod
+
+php .\bin\console doctrine:database:create
+
+php .\bin\console doctrine:schema:update --dump-sql --force
+
+php .\bin\console doctrine:migrations:diff
+
+php .\bin\console doctrine:migrations:migrate
+
+php .\bin\console doctrine:migrations:migrate prev
+
+php .\bin\console make:entity
+
+php .\composer.phar require --dev orm-fixtures
+
+php .\bin\console doctrine:fixtures:load (--append)
+
+php .\bin\console make:form
+
+php .\bin\console make:crud
+
+
+

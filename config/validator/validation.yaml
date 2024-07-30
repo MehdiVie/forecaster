@@ -1,0 +1,5 @@
+App\Entity\Location:
+    properties:
+        name:
+            - NotBlank: 
+                message: "Location name must be specified!"

@@ -1,0 +1,112 @@
+{% extends 'layout_boxed.html.twig' %}
+
+{% block title %}
+    {{location.name}}, {{location.countryCode}} Weather Forecast
+{% endblock %}
+
+{% block content %}
+
+    
+    <div class="row mt-3">
+        <div class="col">
+            <h1>Forecast for: {{location.name}} - {{location.countryCode}}</h1>
+        </div>
+    </div>
+    <div class="row mt-3">
+        <div class="col" >
+            <div id="map" class="mt-3" style="height: 180px;"></div>
+        </div>
+    </div>
+    <div class="row  mt-3">
+        <div class="container py-5 h-100">
+        <div class="row d-flex  h-100">
+        {% for forecast in forecasts %}
+
+        <div class="col-md-8 col-lg-6 col-xl-4">
+            <div class="card shadow-0 border">
+                <div class="card-body p-4">
+                    <p class="mb-2"><strong>{{forecast.date | date('d.m') }}-{{forecast.date | date('l') }}</strong></p>
+                    <p class="mb-2">temperature: <strong>{{forecast.celcius}}&deg;</strong></p>
+                    <p>Feels like: <strong>{{forecast.flTemperatureCelsius}}&deg;</strong></p>
+                    <p>Pressure: <strong>{{forecast.pressure}}</strong>, Humidity: <strong>{{forecast.humidity}}</strong></p>
+                    <p>Wind Speed: <strong>{{forecast.windSpeed}}</strong>, Wind Degree: <strong>{{forecast.windDeg}}</strong></p>
+
+                    <div class="d-flex flex-row align-items-center">
+                    <p class="mb-0 me-4">Cloudiness</p>
+                    <i class="bi bi-{{forecast.icon}}" style="font-size: 2rem; color: cornflowerblue;"></i>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+            {# <div class="col-12 col-lg-6">
+                <div class="card">
+                    <div class="row">
+                        <div class="forecast-card-header col-xs-12 d-flex justify-content-between">
+                            <div class="day">{{forecast.date | date('l') }}</div>
+                            <div class="date">{{forecast.date | date('d.m') }}</div>
+                        </div>
+                        <div class="card-general col-12 col-lg-6">
+                            <div class="row">
+                                <div class="col-6 text-center">
+                                    <i class="bi-{{forecast.icon}} forecast-icon"></i>
+                                </div>
+                                <div class="col-6 ">
+                                    <div class="temperature">{{forecast.celcius}}&deg;</div>
+                                    <div class="fl-temperature">{{forecast.flTemperatureCelsius}}&deg;</div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="forecast-card-details col-12 col-lg-6 mt-3">
+                            <dl>
+                                <dt>Pressure</dt>
+                                <dd>{{forecast.pressure}}</dd>
+
+                                <dt>Humidity</dt>
+                                <dd>{{forecast.humidity}}</dd>
+            
+                                <dt>Wind Speed</dt>
+                                <dd>{{forecast.windSpeed}}</dd>
+
+                                <dt>Wind Degree</dt>
+                                <dd>{{forecast.windDeg}}</dd>
+
+                                <dt>Cloudiness</dt>
+                                <dd>{{forecast.cloudiness}}</dd>   
+                            </dl>
+                        </div>
+                    </div>
+                </div>
+            </div> #}
+        {% endfor %}
+        </div>
+        </div>
+    </div>
+    <script>
+
+        
+    </script>
+{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="" />
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
+    <script>
+        var map = L.map('map').setView([{{location.latitude}}, {{location.longitude}}], 10);
+
+        L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+        }).addTo(map);
+
+        L.marker([{{location.latitude}}, {{location.longitude}}]).addTo(map);
+    </script>
+
+{% endblock %}
