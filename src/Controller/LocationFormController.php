@@ -24,8 +24,11 @@ class LocationFormController extends AbstractController
     {
         $location = new Location();
         // $location->setCountryCode('PL');
-
-        $form = $this->createForm(LocationFormTestType::class, $location);
+        $location->setLatitude(0);
+        $location->setLongitude(0);
+        $form = $this->createForm(LocationFormTestType::class, $location, [
+            'validation_groups' => ['new'],
+        ]);
         // $form =$this->createFormBuilder()
         //             ->add('location', LocationFormTestType::class)
         //             ->getForm()
@@ -35,10 +38,42 @@ class LocationFormController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $repository->save($location,true);
 
-            return $this -> redirectToRoute('app_location_index');
+            return $this -> redirectToRoute('app_locationform_edit', [
+                'id' => $location->getID(),
+            ]);
         }
 
         return $this->render('location_form/new.html.twig', [
+            'form' => $form,
+        ]);
+    }
+
+    #[Route('/edit/{id}')]
+    public function edit(
+        Request $request,
+        Location $location,
+        LocationRepository $repository,
+        ): Response
+    {
+
+        $form = $this->createForm(LocationFormTestType::class, $location, [
+            'validation_groups' => ['edit'],
+        ]);
+        // $form =$this->createFormBuilder()
+        //             ->add('location', LocationFormTestType::class)
+        //             ->getForm()
+        //             ;
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $repository->save($location,true);
+
+            return $this -> redirectToRoute('app_locationform_edit', [
+                'id' => $location->getID(),
+            ]);
+        }
+
+        return $this->render('location_form/edit.html.twig', [
             'form' => $form,
         ]);
     }

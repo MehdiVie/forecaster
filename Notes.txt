@@ -32,5 +32,9 @@ php .\bin\console make:form
 
 php .\bin\console make:crud
 
+php ..\composer.phar require symfony/validator
+
+php .\bin\console make:command
+
 
 

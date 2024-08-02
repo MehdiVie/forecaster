@@ -22,6 +22,7 @@ class LocationType extends AbstractType
                     'France' => 'FR',
                     'India' => 'IN',
                     'Poland' => 'PL',
+                    'Spain' => 'ES',
                     'United Kingdom' => 'UK',
                     'United States' => 'US',  
                 ]

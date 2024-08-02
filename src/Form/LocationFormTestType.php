@@ -20,10 +20,12 @@ class LocationFormTestType extends AbstractType
                 ->add('countryCode',ChoiceType::class , [
                     'choices' => [
                         '' => null,
+                        'Austria' => 'AT',
                         'Poland' => 'PL',
                         'Germany' => 'DE',
                         'France' => 'FR',
                         'India' => 'IN',
+                        'Spain' => 'ES',
                         'United Kingdom' => 'UK',
                         'United States' => 'US'
                     ]
@@ -42,8 +44,8 @@ class LocationFormTestType extends AbstractType
                     'scale' => 7,
                     'attr' => [
                         'step' => 0.0001,
-                        'min' => -90,
-                        'max' => 90
+                        'min' => -180,
+                        'max' => 180
                     ]
                 ])
                 ->add('Submit',SubmitType::class)

@@ -1,0 +1,69 @@
+App\Entity\Location:
+    properties:
+        name:
+          - NotBlank: 
+              message: "Location name must be specified!"
+              groups: ['new','edit']
+          - Length:
+              max: 255
+              maxMessage: "The length of Location name can not exceed {{ limit }} characters!"
+              groups: ['new','edit']
+        countryCode:
+          - NotBlank: 
+              message: "CountryCode name must be specified!"
+              groups: ['new','edit']
+        latitude:
+          - NotBlank: 
+              groups: ['new','edit']
+          - Range:
+              min: -90
+              max: 90
+              notInRangeMessage: "The latitude must be between {{ min }} and {{ max }} degrees!"
+              groups: ['new','edit']
+          - NotEqualTo:
+                value: 0
+                groups: ['edit']
+        longitude:
+          - NotBlank: 
+              groups: ['new','edit']
+          - Range:
+              min: -180
+              max: 180
+              notInRangeMessage: "The longitude must be between {{ min }} and {{ max }} degrees!"
+              groups: ['new','edit']
+          - NotEqualTo:
+              value: 0
+              groups: ['edit']
+
+App\Entity\Forecast:
+    properties:
+        pressure:
+            - GreaterThanOrEqual:
+                value: 900
+                groups: ['new','edit']
+        
+        humidity:
+            - Range:
+                min: 0
+                max: 100
+                groups: ['new','edit']
+        
+        windSpeed:
+            - PositiveOrZero: 
+                groups: ['new','edit']
+
+        windDeg:
+            - PositiveOrZero: 
+                groups: ['new','edit']
+            - LessThan:
+                value: 360
+                groups: ['new','edit']
+        
+        cloudiness:
+            - Range:
+                min: 0
+                max: 100
+                groups: ['new','edit']
+        
+
+            

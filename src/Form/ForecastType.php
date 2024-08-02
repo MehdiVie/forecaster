@@ -27,10 +27,14 @@ class ForecastType extends AbstractType
             ->add('cloudiness')
             ->add('icon', ChoiceType::class , [
                 'choices' => [
-                    'sun' => 'sun',
-                    'cloud' => 'cloud',
-                    'cloud-sun' => 'cloud-sun',
-                    'cloud-rain' => 'cloud-rain'
+                    'Sun' => 'sun',
+                    'Cloudy' => 'cloud',
+                    'Sun and Clouds' => 'cloud-sun',
+                    'Cloudy with Rain' => 'cloud-rain',
+                    'Hail' => 'cloud-hail',
+                    'Snow' => 'cloud-snow',
+                    'Sleet' => 'cloud-sleet',
+                    'Thunderstorms' => 'cloud-lightning-rain',
                 ]
             ])
             ->add('location', EntityType::class, [
